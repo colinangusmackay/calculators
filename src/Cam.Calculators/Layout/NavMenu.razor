@@ -1,40 +1,39 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Cam.Calculators</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+﻿<nav class="site-nav">
+    <div class="site-search">
+        <input type="search" placeholder="Search docs" aria-label="Search documentation"/>
     </div>
-</div>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
+    <div class="nav-section">
+        <div class="nav-section-title">Getting started</div>
+        <ul class="nav-list">
+            <li class="nav-list-item">
+                <NavLink class="nav-list-link" href="" Match="NavLinkMatch.All" @onclick="OnNavigate">Overview</NavLink>
+            </li>
+            <li class="nav-list-item">
+                <NavLink class="nav-list-link" href="getting-started" @onclick="OnNavigate">Install and run</NavLink>
+            </li>
+        </ul>
+    </div>
+
+    <div class="nav-section">
+        <div class="nav-section-title">Reference</div>
+        <ul class="nav-list">
+            <li class="nav-list-item">
+                <NavLink class="nav-list-link" href="calculators" @onclick="OnNavigate">Calculators</NavLink>
+            </li>
+            <li class="nav-list-item">
+                <NavLink class="nav-list-link" href="reference" @onclick="OnNavigate">Theme tokens</NavLink>
+            </li>
+        </ul>
+    </div>
+
+    <div class="nav-section nav-aux">
+        <a class="nav-aux-link" href="https://github.com/just-the-docs/just-the-docs" target="_blank" rel="noopener">Just the Docs</a>
+        <a class="nav-aux-link" href="https://github.com/colinmackay/calculators" target="_blank" rel="noopener">GitHub</a>
+    </div>
+</nav>
 
 @code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnNavigate { get; set; }
 }

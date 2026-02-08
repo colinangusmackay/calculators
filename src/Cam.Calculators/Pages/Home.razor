@@ -1,7 +1,57 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Cam.Calculators</PageTitle>
 
-<h1>Hello, world!</h1>
+<section class="doc-hero">
+    <div class="hero-copy">
+        <p class="eyebrow">Cam.Calculators</p>
+        <h1>Calculators, documented.</h1>
+        <p class="lead">
+            A Blazor WebAssembly experience modeled after the Just the Docs layout. Navigate, read, and
+            ship with the same structure you would in Jekyll, but running entirely in .NET.
+        </p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="getting-started">Get started</a>
+            <a class="btn btn-ghost" href="calculators">Browse calculators</a>
+        </div>
+    </div>
+    <div class="hero-panel">
+        <p class="panel-title">Quick start</p>
+        <pre class="panel-code"><code>dotnet watch --project src/Cam.Calculators run
+dotnet publish -c Release</code></pre>
+        <p class="panel-meta">Published to GitHub Pages with the workflow in .github/workflows.</p>
+    </div>
+</section>
 
-Welcome to your new app.
+<section>
+    <h2>What this template includes</h2>
+    <p>
+        Just the Docs emphasizes navigation, search, and clarity. This Blazor translation keeps the
+        layout conventions and typography while staying portable to WebAssembly.
+    </p>
+    <div class="card-grid">
+        <a class="card" href="getting-started">
+            <p class="card-title">Structure</p>
+            <p class="card-text">Sidebar navigation, breadcrumbs, and focused content width to mirror the theme.</p>
+            <span class="card-meta">Start here</span>
+        </a>
+        <a class="card" href="calculators">
+            <p class="card-title">Calculators</p>
+            <p class="card-text">A growing library of financial and engineering helpers built as components.</p>
+            <span class="card-meta">Browse list</span>
+        </a>
+        <a class="card" href="reference">
+            <p class="card-title">Tokens</p>
+            <p class="card-text">Theme tokens and reusable classes for callouts, tables, and layouts.</p>
+            <span class="card-meta">View reference</span>
+        </a>
+    </div>
+</section>
+
+<div class="callout callout-info">
+    <p class="callout-title">Heads up</p>
+    <p>
+        Style sheets are compiled with DartSassBuilder during build. Edit
+        <code>styles/app.scss</code> and rebuild to update the CSS.
+    </p>
+</div>

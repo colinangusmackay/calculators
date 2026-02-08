@@ -1,0 +1,44 @@
+@page "/getting-started"
+
+<PageTitle>Getting Started</PageTitle>
+
+<h1>Getting started</h1>
+<p class="lead">
+    Use this page as a guide for running the Blazor app locally and keeping the Just the Docs inspired
+    styling in sync with your content.
+</p>
+
+<ol class="steps">
+    <li>
+        <strong>Restore packages.</strong>
+        <p>Run <code>dotnet restore</code> from the repository root.</p>
+    </li>
+    <li>
+        <strong>Run the app.</strong>
+        <p><code>dotnet watch --project src/Cam.Calculators run</code> for live reloading.</p>
+    </li>
+    <li>
+        <strong>Edit styles.</strong>
+        <p>Update <code>styles/app.scss</code> to change colors, layout, or typography.</p>
+    </li>
+    <li>
+        <strong>Publish.</strong>
+        <p><code>dotnet publish -c Release</code> produces the GitHub Pages output.</p>
+    </li>
+</ol>
+
+<h2>Directory map</h2>
+<pre><code>src/Cam.Calculators
+  Layout/             Shared layout and navigation
+  Pages/              Content pages
+  styles/             SASS source for the theme
+  wwwroot/css/        Compiled CSS output
+  wwwroot/css/        Compiled CSS output</code></pre>
+
+<div class="callout callout-warning">
+    <p class="callout-title">Remember</p>
+    <p>
+        DartSassBuilder runs during build. If you change SASS files and do not see updates,
+        rebuild the project or restart the watch task.
+    </p>
+</div>

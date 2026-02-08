@@ -1,16 +1,57 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+<div class="page-wrap @(navOpen ? "nav-open" : "")">
+    <aside class="side-bar">
+        <div class="site-header">
+            <a class="site-title" href="">Cam.Calculators</a>
+            <button class="site-nav-toggle sidebar-toggle" type="button" @onclick="ToggleNavMenu" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+        <NavMenu OnNavigate="CloseNavMenu"/>
+    </aside>
 
-        <article class="content px-4">
+    <div class="nav-scrim" @onclick="CloseNavMenu"></div>
+
+    <main class="main-content">
+        <header class="page-header">
+            <div class="page-header-inner">
+                <button class="site-nav-toggle header-toggle" type="button" @onclick="ToggleNavMenu" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="breadcrumbs">Docs</div>
+                <div class="page-actions">
+                    <a class="page-action" href="https://github.com/just-the-docs/just-the-docs" target="_blank" rel="noopener">Theme</a>
+                    <a class="page-action" href="https://github.com/colinmackay/calculators" target="_blank" rel="noopener">GitHub</a>
+                </div>
+            </div>
+        </header>
+
+        <article class="content">
             @Body
         </article>
+
+        <footer class="site-footer">
+            <div>Cam.Calculators</div>
+            <div>Built with Blazor WebAssembly and a Just the Docs inspired layout.</div>
+        </footer>
     </main>
 </div>
+
+@code {
+    private bool navOpen;
+
+    private void ToggleNavMenu()
+    {
+        navOpen = !navOpen;
+    }
+
+    private void CloseNavMenu(MouseEventArgs? _)
+    {
+        navOpen = false;
+    }
+}

@@ -1,0 +1,55 @@
+﻿@page "/calculators"
+
+<PageTitle>Calculators</PageTitle>
+
+<h1>Calculators</h1>
+<p class="lead">
+    A curated set of helpers focused on clarity and discoverability. Each calculator is documented
+    with inputs, formulas, and output expectations.
+</p>
+
+<div class="card-grid">
+    <div class="card">
+        <p class="card-title">Loan amortization</p>
+        <p class="card-text">Monthly payment schedule, total interest, and payoff dates.</p>
+        <span class="tag">Finance</span>
+    </div>
+    <div class="card">
+        <p class="card-title">Unit conversion</p>
+        <p class="card-text">Length, area, and volume conversions with sensible defaults.</p>
+        <span class="tag">Utilities</span>
+    </div>
+    <div class="card">
+        <p class="card-title">Energy usage</p>
+        <p class="card-text">Estimate consumption and costs from wattage and runtime.</p>
+        <span class="tag">Engineering</span>
+    </div>
+</div>
+
+<h2>Planned formulas</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Calculator</th>
+        <th>Formula</th>
+        <th>Output</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Mortgage</td>
+        <td>P = r * L / (1 - (1 + r)^-n)</td>
+        <td>Monthly payment</td>
+    </tr>
+    <tr>
+        <td>Compound interest</td>
+        <td>A = P(1 + r/n)^(nt)</td>
+        <td>Future value</td>
+    </tr>
+    <tr>
+        <td>Break-even</td>
+        <td>Q = Fixed / (Price - Variable)</td>
+        <td>Units to break even</td>
+    </tr>
+    </tbody>
+</table>
