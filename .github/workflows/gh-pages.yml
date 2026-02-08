@@ -33,6 +33,7 @@ jobs:
         run: |
           repo_name="${{ github.event.repository.name }}"
           sed -i "s|<base href=\"/\" />|<base href=\"/${repo_name}/\" />|g" dist/wwwroot/index.html
+          sed -i "s|css/app.css|css/app.css?v=${{ github.sha }}|g" dist/wwwroot/index.html
           cp dist/wwwroot/index.html dist/wwwroot/404.html
           touch dist/wwwroot/.nojekyll
       - name: Upload Pages artifact
