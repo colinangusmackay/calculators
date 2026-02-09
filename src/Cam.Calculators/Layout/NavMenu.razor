@@ -1,36 +1,32 @@
 ﻿<nav class="site-nav">
     <div class="site-search">
-        <input type="search" placeholder="Search docs" aria-label="Search documentation"/>
+        <input type="search" placeholder="Search docs" aria-label="Search"/>
     </div>
 
     <div class="nav-section">
-        <div class="nav-section-title">Getting started</div>
+        <div class="nav-section-title">Finance</div>
         <ul class="nav-list">
             <li class="nav-list-item">
-                <NavLink class="nav-list-link" href="" Match="NavLinkMatch.All" @onclick="OnNavigate">Overview</NavLink>
+                <NavLink class="nav-list-link" href="finance/loan-repayments" Match="NavLinkMatch.All" @onclick="OnNavigate">Loan Repayments</NavLink>
             </li>
             <li class="nav-list-item">
-                <NavLink class="nav-list-link" href="getting-started" @onclick="OnNavigate">Install and run</NavLink>
+                <NavLink class="nav-list-link" href="finance/inflation-eats-debt" @onclick="OnNavigate">Inflation eats debt?</NavLink>
             </li>
         </ul>
     </div>
 
     <div class="nav-section">
-        <div class="nav-section-title">Reference</div>
+        <div class="nav-section-title">Unit Conversions</div>
         <ul class="nav-list">
             <li class="nav-list-item">
-                <NavLink class="nav-list-link" href="calculators" @onclick="OnNavigate">Calculators</NavLink>
+                <NavLink class="nav-list-link" href="unit-conversions/temperature" @onclick="OnNavigate">Temperature</NavLink>
             </li>
             <li class="nav-list-item">
-                <NavLink class="nav-list-link" href="reference" @onclick="OnNavigate">Theme tokens</NavLink>
+                <NavLink class="nav-list-link" href="unit-conversions/distance" @onclick="OnNavigate">Distance</NavLink>
             </li>
         </ul>
     </div>
 
-    <div class="nav-section nav-aux">
-        <a class="nav-aux-link" href="https://github.com/just-the-docs/just-the-docs" target="_blank" rel="noopener">Just the Docs</a>
-        <a class="nav-aux-link" href="https://github.com/colinmackay/calculators" target="_blank" rel="noopener">GitHub</a>
-    </div>
 </nav>
 
 @code {
