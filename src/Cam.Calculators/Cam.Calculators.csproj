@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
+        <EnableDefaultSassItems>false</EnableDefaultSassItems>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,7 +15,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <SassCompile Include="styles/app.scss" OutputFile="wwwroot/css/app.css"/>
+        <SassFile Include="styles/app.scss" />
     </ItemGroup>
+
+    <Target Name="CopySassOutputToWwwroot" AfterTargets="DartSass_Build">
+        <MakeDir Directories="wwwroot/css" />
+        <Copy SourceFiles="styles/app.css"
+              DestinationFiles="wwwroot/css/app.css"
+              SkipUnchangedFiles="true" />
+    </Target>
 
 </Project>

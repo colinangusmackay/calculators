@@ -448,6 +448,21 @@ hr {
     transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
+.card .parameter {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.card .parameter span {
+    flex: 1 1 0;
+}
+
+.card .parameter input {
+    width: 33%;
+    flex: 0 0 33%;
+}
+
 .card:hover {
     transform: translateY(-4px);
     border-color: $color-accent;

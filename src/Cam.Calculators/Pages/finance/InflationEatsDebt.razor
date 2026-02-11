@@ -8,6 +8,11 @@
     Inflation can eat debt, but it depends on the interest rate and the rate of inflation.
 </p>
 <p>
+    When people say “don’t overpay, inflation will eat the debt”, they really mean:
+    If the real (inflation-adjusted) interest rate on your mortgage is low or negative, the debt shrinks in real
+    terms over time, so keeping cheap debt can make sense.
+</p>
+<p>
     This calculator lets you plug in the numbers so you can see for your self what works and what doesn't.
 </p>
 
@@ -15,41 +20,46 @@
     <div class="card">
         <p class="card-title">Your Loan</p>
         <p class="card-text">The details of your loan. e.g. a personal loan or a mortgage, etc.</p>
-        <div>
+        <div class="parameter">
             <span>Amount:</span>
-            <input type="number" placeholder="£" />
+            <input type="number" placeholder="£" id="loanAmount" />
         </div>
         <div class="parameter">
             <span>Interest rate:</span>
-            <input type="number" placeholder="%" />
+            <input type="number" placeholder="%" id="loanInterestRate" />
         </div>
         <div class="parameter">
             <span>Term:</span>
-            <input type="number" placeholder="years" />
+            <input type="number" placeholder="years" id="loanTerm" />
         </div>
     </div>
     <div class="card">
         <p class="card-title">Your situation</p>
-        <p class="card-text">These are details about your financial position.</p>
+        <p class="card-text">
+            These are details about your financial position.
+            How much you have to overpay the loan/mortgage or invest to keep up with inflation.
+            What you expect your salary to rise by each year.
+            How much you earn on your investments or savings.
+        </p>
         <div class="parameter">
-            <span>Overpayment:</span>
-            <input type="number" placeholder="£" />
+            <span>Available to overpay or invest:</span>
+            <input type="number" placeholder="£" id="availableToOverpayOrInvest" />
         </div>
         <div class="parameter">
-            <span>Salary increase %:</span>
-            <input type="number" placeholder="%" />
+            <span>Annual salary increase %:</span>
+            <input type="number" placeholder="%" id="salaryIncrease" />
         </div>
         <div class="parameter">
-            <span>Current inflation rate:</span>
-            <input type="number" placeholder="%" />
+            <span>Investment returns:</span>
+            <input type="number" placeholder="%" id="investmentReturns" />
         </div>
     </div>
     <div class="card">
-        <p class="card-title">Investment Option</p>
-        <p class="card-text">These are the details of any investment options you may have. The figure should be after tax, unless you are investing in an ISA.</p>
+        <p class="card-title">The Inflation Rate</p>
+        <p class="card-text">These are the details of the rate of inflation.</p>
         <div class="parameter">
-            <span>Investment returns:</span>
-            <input type="number" placeholder="%" />
+            <span>Inflation rate:</span>
+            <input type="number" placeholder="%" id="inflationRate" />
         </div>
     </div>
 </div>
