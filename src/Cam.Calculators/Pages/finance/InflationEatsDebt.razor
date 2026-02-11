@@ -1,4 +1,6 @@
 @page "/finance/inflation-eats-debt"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Does inflation eat debt?</PageTitle>
 
@@ -18,19 +20,26 @@
 
 <div class="card-grid">
     <div class="card">
-        <p class="card-title">Your Loan</p>
-        <p class="card-text">The details of your loan. e.g. a personal loan or a mortgage, etc.</p>
+        <p class="card-title">Your Debt</p>
+        <p class="card-text">The details of your Debt. e.g. a personal loan or a mortgage, etc.</p>
+        <div class="parameter">
+            <span>Type:</span>
+            <input type="radio" id="debtLoan" name="debtType" value="Loan" checked="@(_debtType == "Loan")" @onchange="@(() => OnDebtTypeChanged("Loan"))" />
+            <label for="debtLoan">Loan</label>
+            <input type="radio" id="debtMortgage" name="debtType" value="Mortgage" checked="@(_debtType == "Mortgage")" @onchange="@(() => OnDebtTypeChanged("Mortgage"))" />
+            <label for="debtMortgage">Mortgage</label>
+        </div>
         <div class="parameter">
             <span>Amount:</span>
-            <input type="number" placeholder="£" id="loanAmount" />
+            <input type="number" placeholder="£" id="loanAmount" @bind="_loanAmount" @oninput="OnInputChanged" />
         </div>
         <div class="parameter">
             <span>Interest rate:</span>
-            <input type="number" placeholder="%" id="loanInterestRate" />
+            <input type="number" placeholder="%" id="loanInterestRate" @bind="_loanInterestRate" @oninput="OnInputChanged" />
         </div>
         <div class="parameter">
             <span>Term:</span>
-            <input type="number" placeholder="years" id="loanTerm" />
+            <input type="number" placeholder="years" id="loanTerm" @bind="_loanTerm" @oninput="OnInputChanged" />
         </div>
     </div>
     <div class="card">
@@ -43,15 +52,15 @@
         </p>
         <div class="parameter">
             <span>Available to overpay or invest:</span>
-            <input type="number" placeholder="£" id="availableToOverpayOrInvest" />
+            <input type="number" placeholder="£" id="availableToOverpayOrInvest" @bind="_availableToOverpayOrInvest" @oninput="OnInputChanged" />
         </div>
         <div class="parameter">
             <span>Annual salary increase %:</span>
-            <input type="number" placeholder="%" id="salaryIncrease" />
+            <input type="number" placeholder="%" id="salaryIncrease" @bind="_salaryIncrease" @oninput="OnInputChanged" />
         </div>
         <div class="parameter">
             <span>Investment returns:</span>
-            <input type="number" placeholder="%" id="investmentReturns" />
+            <input type="number" placeholder="%" id="investmentReturns" @bind="_investmentReturns" @oninput="OnInputChanged" />
         </div>
     </div>
     <div class="card">
@@ -59,10 +68,97 @@
         <p class="card-text">These are the details of the rate of inflation.</p>
         <div class="parameter">
             <span>Inflation rate:</span>
-            <input type="number" placeholder="%" id="inflationRate" />
+            <input type="number" placeholder="%" id="inflationRate" @bind="_inflationRate" @oninput="OnInputChanged" />
         </div>
     </div>
 </div>
-@code {
 
+<h2>Step 1: Your @_debtType in real terms.</h2>
+
+<p>A good approximation of your real terms @_debtType interest rate is:</p>
+
+<p class="maths">
+
+</p>
+
+
+
+@code {
+    private string? _debtType;
+    private decimal? _loanAmount;
+    private decimal? _loanInterestRate;
+    private decimal? _loanTerm;
+    private decimal? _availableToOverpayOrInvest;
+    private decimal? _salaryIncrease;
+    private decimal? _investmentReturns;
+    private decimal? _inflationRate;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadFromQueryString();
+        }
+    }
+
+    private async Task LoadFromQueryString()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+
+        _loanAmount = ParseDecimal(query["loanAmount"]);
+        _debtType = query["debtType"];
+        _loanInterestRate = ParseDecimal(query["loanInterestRate"]);
+        _loanTerm = ParseDecimal(query["loanTerm"]);
+        _availableToOverpayOrInvest = ParseDecimal(query["availableToOverpayOrInvest"]);
+        _salaryIncrease = ParseDecimal(query["salaryIncrease"]);
+        _investmentReturns = ParseDecimal(query["investmentReturns"]);
+        _inflationRate = ParseDecimal(query["inflationRate"]);
+
+        StateHasChanged();
+    }
+
+    private decimal? ParseDecimal(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return null;
+
+        if (decimal.TryParse(value, out var result))
+            return result;
+
+        return null;
+    }
+
+    private async Task UpdateQueryString()
+    {
+        var parameters = new Dictionary<string, object?>
+        {
+            ["debtType"] = _debtType,
+            ["loanAmount"] = _loanAmount,
+            ["loanInterestRate"] = _loanInterestRate,
+            ["loanTerm"] = _loanTerm,
+            ["availableToOverpayOrInvest"] = _availableToOverpayOrInvest,
+            ["salaryIncrease"] = _salaryIncrease,
+            ["investmentReturns"] = _investmentReturns,
+            ["inflationRate"] = _inflationRate
+        };
+
+        var queryString = string.Join("&", parameters
+            .Where(p => p.Value != null)
+            .Select(p => $"{p.Key}={p.Value}"));
+
+        var newUrl = $"{NavigationManager.ToAbsoluteUri(NavigationManager.Uri).GetLeftPart(UriPartial.Path)}?{queryString}";
+        NavigationManager.NavigateTo(newUrl, replace: true);
+    }
+
+    private async Task OnInputChanged()
+    {
+        await UpdateQueryString();
+    }
+
+    private async Task OnDebtTypeChanged(string value)
+    {
+        _debtType = value;
+        await UpdateQueryString();
+    }
 }
