@@ -31,15 +31,15 @@
         </div>
         <div class="parameter">
             <span>Amount:</span>
-            <input type="number" placeholder="£" id="loanAmount" @bind="_loanAmount" @oninput="OnInputChanged" />
+            <input type="number" placeholder="£" id="loanAmount" @bind="_debtAmount" @oninput="OnInputChanged" />
         </div>
         <div class="parameter">
             <span>Interest rate:</span>
-            <input type="number" placeholder="%" id="loanInterestRate" @bind="_loanInterestRate" @oninput="OnInputChanged" />
+            <input type="number" placeholder="%" id="loanInterestRate" @bind="_debtInterestRate" @oninput="OnInputChanged" />
         </div>
         <div class="parameter">
             <span>Term:</span>
-            <input type="number" placeholder="years" id="loanTerm" @bind="_loanTerm" @oninput="OnInputChanged" />
+            <input type="number" placeholder="years" id="loanTerm" @bind="_debtTerm" @oninput="OnInputChanged" />
         </div>
     </div>
     <div class="card">
@@ -78,20 +78,48 @@
 <p>A good approximation of your real terms @_debtType interest rate is:</p>
 
 <p class="maths">
-
+    Real rate ≅ @FormattedDebtInterestRate - @FormattedInflationRate = @FormattedRealDebtInterestRate
 </p>
 
+<p>So, yes, inflation does reduce the real burden of your @_debtType.</p>
 
+@if (RealDebtInterestRateIsPositive)
+{
+    <p>But notice that <strong>it is still positive</strong>. Inflation isn't eating it away completely.</p>
+}
+else
+{
+    <p>And notice that <strong>it is negative.</strong>. Inflation is eating away your @_debtType.</p>
+}
+
+<h2>Step 2: What overpaying actually earns you</h2>
+
+<p>Every £1 you overpay on your @_debtType avoids @FormattedDebtInterestRate nominal interest, which is worth <strong>@FormattedRealDebtInterestRate</strong> in real terms.</p>
+
+<p>That's a risk free return equivalent to a savings account paying @FormattedDebtInterestRate after tax. That's the benchmark you should compare everything to.</p>
 
 @code {
     private string? _debtType;
-    private decimal? _loanAmount;
-    private decimal? _loanInterestRate;
-    private decimal? _loanTerm;
+    private decimal? _debtAmount;
+    private decimal? _debtInterestRate;
+    private decimal? _debtTerm;
     private decimal? _availableToOverpayOrInvest;
     private decimal? _salaryIncrease;
     private decimal? _investmentReturns;
     private decimal? _inflationRate;
+
+    private string FormattedDebtInterestRate => DebtInterestRatePercent.ToString("P");
+    private string FormattedInflationRate => InflationRatePercent.ToString("P");
+
+
+    private decimal DebtInterestRatePercent => (_debtInterestRate ?? 0) / 100M;
+    private decimal InflationRatePercent => (_inflationRate ?? 0) / 100M;
+
+    private bool Step1Prerequisites => _debtAmount.HasValue && _debtInterestRate.HasValue && _inflationRate.HasValue;
+
+    private decimal RealDebtInterestRate => DebtInterestRatePercent - InflationRatePercent;
+    private string FormattedRealDebtInterestRate => RealDebtInterestRate.ToString("P");
+    private bool RealDebtInterestRateIsPositive => RealDebtInterestRate > 0;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -106,10 +134,10 @@
         var uri = new Uri(NavigationManager.Uri);
         var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
 
-        _loanAmount = ParseDecimal(query["loanAmount"]);
+        _debtAmount = ParseDecimal(query["loanAmount"]);
         _debtType = query["debtType"];
-        _loanInterestRate = ParseDecimal(query["loanInterestRate"]);
-        _loanTerm = ParseDecimal(query["loanTerm"]);
+        _debtInterestRate = ParseDecimal(query["loanInterestRate"]);
+        _debtTerm = ParseDecimal(query["loanTerm"]);
         _availableToOverpayOrInvest = ParseDecimal(query["availableToOverpayOrInvest"]);
         _salaryIncrease = ParseDecimal(query["salaryIncrease"]);
         _investmentReturns = ParseDecimal(query["investmentReturns"]);
@@ -134,9 +162,9 @@
         var parameters = new Dictionary<string, object?>
         {
             ["debtType"] = _debtType,
-            ["loanAmount"] = _loanAmount,
-            ["loanInterestRate"] = _loanInterestRate,
-            ["loanTerm"] = _loanTerm,
+            ["loanAmount"] = _debtAmount,
+            ["loanInterestRate"] = _debtInterestRate,
+            ["loanTerm"] = _debtTerm,
             ["availableToOverpayOrInvest"] = _availableToOverpayOrInvest,
             ["salaryIncrease"] = _salaryIncrease,
             ["investmentReturns"] = _investmentReturns,

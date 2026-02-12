@@ -40,6 +40,14 @@ body {
     line-height: 1.65;
 }
 
+p.maths {
+    font-family: $font-serif;
+    font-weight: 700;
+    text-align: center;
+    font-size: 1.3rem;
+    line-height: 1.2;
+}
+
 button {
     font-family: inherit;
 }
@@ -449,18 +457,31 @@ hr {
 }
 
 .card .parameter {
-    display: flex;
+    display: grid;
+    grid-template-columns: 67% auto 1fr;
+    column-gap: 0.25rem;
+    row-gap: 0.4rem;
     align-items: center;
-    gap: 0.75rem;
 }
 
 .card .parameter span {
-    flex: 1 1 0;
+    grid-column: 1;
+    min-width: 0;
 }
 
-.card .parameter input {
-    width: 33%;
-    flex: 0 0 33%;
+.card .parameter input:not([type="radio"]) {
+    grid-column: 2 / 4;
+    width: 100%;
+}
+
+.card .parameter input[type="radio"] {
+    grid-column: 2;
+    margin: 0;
+}
+
+.card .parameter input[type="radio"] + label {
+    grid-column: 3;
+    text-align: left;
 }
 
 .card:hover {
